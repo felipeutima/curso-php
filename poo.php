@@ -11,8 +11,8 @@ error_reporting(E_ALL);
     protected $edad;
     protected $nacionalidad;
 
-    public function setNombre($nombre){ $this->nombre = $nombre; }
-    public function getNombre(){ return $this->nombre; }
+    public function setNombre($nombre){ $this->nombre = $nombre; }//para poder setear la variable porque está protegida
+    public function getNombre(){ return $this->nombre; } //para obtener la variable que está protegida 
     
     public function setDni($dni){ $this->dni; }
     public function getDni(){ return $this->dni; }
@@ -23,7 +23,8 @@ error_reporting(E_ALL);
     public function setNacionalidad($nacionalidad){ $this->nacionalidad; }
     public function getNacionalidad(){ return $this->nacionalidad; }
     
-    abstract public function imprimir();
+    abstract public function imprimir()     
+    ;
 
 }
 
@@ -55,7 +56,7 @@ class Alumno extends Persona {  //se extienden los metodos de la clase persona
         echo "Nota Portfolio: " . $this->notaPortfolio . "<br>";
         echo "Nota PHP: " . $this->notaPhp . "<br>";
         echo "Nota Proyecto: " . $this->notaProyecto . "<br>";
-        echo "El promedio es: " . $this->calcularPromedio() . "<br>";
+        echo "El promedio es: " .number_format($this->calcularPromedio(),2,",",".") ;
     }
 
     public function calcularPromedio(){
@@ -81,7 +82,7 @@ class Docente extends Persona {
         $this->especialidad = $especialidad;
     }
 
-    public function __get($propiedad) {
+    public function __get($propiedad) { //solo en php en otros lenguajes toca setear uno a uno
         return $this->$propiedad;
     }
 
@@ -101,7 +102,7 @@ class Docente extends Persona {
     public function imprimirEspecialidadesHabilitadas(){
         echo "Las especialidades habilitadas para un docente son:<br>";
         echo self::ESPECIALIDAD_ECO . "<br>";
-        echo self::ESPECIALIDAD_WP . "<br>";
+        echo self::ESPECIALIDAD_WP . "<br>"; //self para acceder desde la mmisma clase 
         echo self::ESPECIALIDAD_BBDD . "<br>";
     }
 
@@ -130,21 +131,9 @@ $alumno2->notaPhp = 8;
 $alumno2->notaProyecto = 7;
 $alumno2->imprimir();
 
-$docente1 = new Docente("35987123", "Cristian Paz", Docente::ESPECIALIDAD_ECO);
+$docente1 = new Docente("35987123", "Cristian Paz", Docente::ESPECIALIDAD_ECO); // los dos puntos llaman a la constante 
 print_r($docente1);
 
+$docente1->imprimirEspecialidadesHabilitadas();
+
 ?>
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
