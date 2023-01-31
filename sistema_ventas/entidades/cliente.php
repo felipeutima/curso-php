@@ -4,7 +4,7 @@ class Cliente
 {
     private $idcliente;
     private $nombre;
-    private $cuit;
+    private $nit;
     private $telefono;
     private $correo;
     private $fecha_nac;
@@ -32,7 +32,7 @@ class Cliente
     {
         $this->idcliente = isset($request["id"]) ? $request["id"] : "";
         $this->nombre = isset($request["txtNombre"]) ? $request["txtNombre"] : "";
-        $this->cuit = isset($request["txtCuit"]) ? $request["txtCuit"] : "";
+        $this->nit = isset($request["txtCuit"]) ? $request["txtCuit"] : "";
         $this->telefono = isset($request["txtTelefono"]) ? $request["txtTelefono"] : "";
         $this->correo = isset($request["txtCorreo"]) ? $request["txtCorreo"] : "";
         $this->fk_idprovincia = isset($request["lstProvincia"]) ? $request["lstProvincia"] : "";
@@ -48,9 +48,10 @@ class Cliente
         //Instancia la clase mysqli con el constructor parametrizado
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         //Arma la query
+        //si son numeros no tiene comillas
         $sql = "INSERT INTO clientes (
                     nombre,
-                    cuit,
+                    nit,
                     telefono,
                     correo,
                     fecha_nac,
@@ -58,12 +59,12 @@ class Cliente
                     fk_idlocalidad,
                     domicilio
                 ) VALUES (
-                    '$this->nombre',
-                    '$this->cuit',
+                    '$this->nombre', 
+                    '$this->nit',
                     '$this->telefono',
                     '$this->correo',
                     '$this->fecha_nac',
-                    $this->fk_idprovincia,
+                    $this->fk_idprovincia, 
                     $this->fk_idlocalidad,
                     '$this->domicilio'
                 );";
@@ -84,13 +85,13 @@ class Cliente
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "UPDATE clientes SET
                 nombre = '$this->nombre',
-                cuit = '$this->cuit',
-                telefono = '$this->telefono',
+                nit = '$this->nit',
+                telefono = '$this->telefono', 
                 correo = '$this->correo',
                 fecha_nac =  '$this->fecha_nac',
-                fk_idprovincia =  '$this->fk_idprovincia',
-                fk_idlocalidad =  '$this->fk_idlocalidad',
-                domicilio =  '$this->domicilio'
+                fk_idprovincia =  $this->fk_idprovincia,
+                fk_idlocalidad =  $this->fk_idlocalidad,
+                domicilio =  '$this->domicilio' 
                 WHERE idcliente = $this->idcliente";
 
         if (!$mysqli->query($sql)) {
@@ -115,7 +116,7 @@ class Cliente
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE, Config::BBDD_PORT);
         $sql = "SELECT idcliente,
                         nombre,
-                        cuit,
+                        nit,
                         telefono,
                         correo,
                         fecha_nac,
@@ -132,7 +133,7 @@ class Cliente
         if ($fila = $resultado->fetch_assoc()) {
             $this->idcliente = $fila["idcliente"];
             $this->nombre = $fila["nombre"];
-            $this->cuit = $fila["cuit"];
+            $this->nit = $fila["nit"];
             $this->telefono = $fila["telefono"];
             $this->correo = $fila["correo"];
             if(isset($fila["fecha_nac"])){
@@ -153,7 +154,7 @@ class Cliente
         $sql = "SELECT 
                     idcliente,
                     nombre,
-                    cuit,
+                    nit,
                     telefono,
                     correo,
                     fecha_nac,
@@ -170,11 +171,11 @@ class Cliente
         if($resultado){
             //Convierte el resultado en un array asociativo
 
-            while($fila = $resultado->fetch_assoc()){
+            while($fila = $resultado->fetch_assoc()){ //fetchsoc carga la fila 
                 $entidadAux = new Cliente();
                 $entidadAux->idcliente = $fila["idcliente"];
                 $entidadAux->nombre = $fila["nombre"];
-                $entidadAux->cuit = $fila["cuit"];
+                $entidadAux->nit = $fila["nit"];
                 $entidadAux->telefono = $fila["telefono"];
                 $entidadAux->correo = $fila["correo"];
                 if(isset($fila["fecha_nac"])){
@@ -188,7 +189,7 @@ class Cliente
                 $aResultado[] = $entidadAux;
             }
         }
-        return $aResultado;
+        return $aResultado;//devuelve el array con los datos
     }
 
 }

@@ -61,8 +61,12 @@ class Alumno extends Persona
         $this->$propiedad = $valor;
     }
 
-    public function setFichaMedica()
+    public function setFichaMedica($peso,$altura,$aptoFisico)
     {
+        $this->peso=$peso;
+        $this->peso=$altura;
+        $this->peso=$aptoFisico;
+
 
     }
 
@@ -80,7 +84,7 @@ class Entrenador extends Persona
 
     public function __construct($dni, $nombre, $correo, $celular)
     {
-        parent::__construct($dni, $nombre, $correo, $celular);
+        parent::__construct($dni, $nombre, $correo, $celular);//para no tener que definir nuevamente  se usa el parent
         $this->aClases = array();
     }
 

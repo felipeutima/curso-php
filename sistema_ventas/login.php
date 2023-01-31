@@ -4,17 +4,22 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include_once "config.php";
+include_once "entidades/usuario.php";
 
 $claveEncriptada = password_hash("admin123",PASSWORD_DEFAULT);
 if($_POST){
   //CAPTURAR FORMULARIO EN VARIABLES 
   $usuario=trim($_REQUEST["txtUsuario"]);
   $clave=$_REQUEST["txtClave"];
+  $entidadUsuario= new Usuario;
+  $entidadUsuario-> obtenePorUsuario($usuario);
+  
 
   //verificar clave y usuario
-  if($usuario=="admin" && password_verify($clave,$claveEncriptada)){
+  if($usuario== $entidadUsuario->usuario && password_verify($clave,$entidadUsuario->clave)){
+    
     //abre sesion
-    $_SESSION["nombre"]= "Felipe";
+    $_SESSION["nombre"]= $entidadUsuario-> nombre;
     //redirecciona
     header("Location: index.php");
 

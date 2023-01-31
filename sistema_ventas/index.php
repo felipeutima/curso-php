@@ -2,8 +2,21 @@
 
 include_once("config.php");
 
-$facturacionMes = 0;
-$facturacionAnual = 0;
+include_once("entidades/venta.php");
+
+//logica facturacion mensual
+$venta=new Venta();
+$facturacionMes=$venta->obtenerFacturacionMensual(date("m"), date("Y"));
+
+$fechaHasta=date("Y-m-d");
+
+$date= new DateTime();
+$fechadesde=date_format($date->modify("-12 months"), "Y-m-d");
+
+//logica facturacion anual
+$facturacionAnual=$venta->obtenerFacturacionPorPeriodo($fechadesde, $fechaHasta);
+
+
 
 $pg = "Inicio";
 

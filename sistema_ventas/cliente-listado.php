@@ -30,7 +30,7 @@ include_once("header.php");
             </tr>
             <?php foreach ($aClientes as $cliente): ?>
               <tr>
-                  <td><?php echo $cliente->cuit; ?></td>
+                  <td><?php echo $cliente->nit; ?></td>
                   <td><?php echo $cliente->nombre; ?></td>
                   <td><?php echo date_format(date_create($cliente->fecha_nac), "d/m/Y"); ?></td>
                   <td><?php echo $cliente->telefono; ?></td>

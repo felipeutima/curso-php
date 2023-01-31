@@ -23,7 +23,7 @@ error_reporting(E_ALL);
     public function setNacionalidad($nacionalidad){ $this->nacionalidad; }
     public function getNacionalidad(){ return $this->nacionalidad; }
     
-    abstract public function imprimir()     
+    abstract public function imprimir()     //se puede acceder a esta funcion desde otra clase por ser abstracta
     ;
 
 }

@@ -1,5 +1,12 @@
 <?php
+//para cerrar la sesion 
+if($_POST){
+  if (isset( $_REQUEST ["btnCerrar"])){
+    session_destroy();
+    header("Location: loging.php");
+  }
 
+}
 
 ?>
 

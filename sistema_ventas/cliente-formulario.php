@@ -44,14 +44,22 @@ if (isset($_GET["do"]) && $_GET["do"] == "buscarLocalidad" && $_GET["id"] && $_G
     echo json_encode($aLocalidad);
     exit;
 }
-if (isset($_GET["id"]) && $_GET["id"] > 0) {
-    $cliente->obtenerPorId();
-}
 
 $provincia = new Provincia();
 $aProvincias = $provincia->obtenerTodos();
 
+if (isset($_GET["id"]) && $_GET["id"] > 0) {
+    $cliente->obtenerPorId();
+    
+}
+
+$localidad=new Localidad();
+$aLocalidades=$localidad->obtenerTodos();
+
+
+
 include_once "header.php";
+
 ?>
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -82,7 +90,7 @@ include_once "header.php";
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtCuit">CUIT:</label>
-                    <input type="text" required class="form-control" name="txtCuit" id="txtCuit" value="<?php echo $cliente->cuit ?>" maxlength="11">
+                    <input type="text" required class="form-control" name="txtCuit" id="txtCuit" value="<?php echo $cliente->nit ?>" maxlength="11">
                 </div>
                 <div class="col-6 form-group">
                     <label for="txtCorreo">Correo:</label>
@@ -149,8 +157,13 @@ include_once "header.php";
                         <div class="col-6 form-group">
                             <label for="txtTelefono">Localidad:</label>
                             <select class="form-control" name="lstLocalidad" id="lstLocalidad" required>
-                                <option value="" disabled selected>Seleccionar</option>
-                                <option value="1">CABA</option>
+                            <?php foreach ($aLocalidades as $localidad): ?>
+                                    <?php if ($cliente->fk_idlocalidad == $localidad->idlocalidad): ?>
+                                        <option selected value="<?php echo $localidad->idlocalidad; ?>"><?php echo $localidad->nombre; ?></option>
+                                    <?php else: ?>
+                                        <option value="<?php echo $localidad->idlocalidad; ?>"><?php echo $localidad->nombre; ?></option>
+                                    <?php endif;?>
+                                <?php endforeach;?>>
                             </select>
                         </div>
                         <div class="col-12 form-group">
